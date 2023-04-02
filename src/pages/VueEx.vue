@@ -1,0 +1,296 @@
+<template class="q-pa-md q-gutter-md">
+  <!--텍스트 보간법-->
+  <q-card-section>
+    Message: {{ msg }}
+    <q-input v-model="inputData"
+      outlined
+      bottom-slots
+      label="DebounceEx"
+      counter
+      :dense="true"
+    />
+  </q-card-section>
+  <q-separator />
+
+	<!--HTML 출력하기-->
+  <q-card-section>Using text interpolation: {{ rawHtml }}</q-card-section>
+  <q-card-section>Using v-html directive: <span v-html="rawHtml"></span></q-card-section>
+  <q-separator />
+
+  <!--속성 바인딩, 단축 문법-->
+  <q-card-section>
+    <q-btn
+      unelevated
+      color="primary"
+      type="a"
+      target="_blank"
+      v-bind:id="linkId"
+      v-bind:href="link.to"
+      :title="link.title"
+      :label="link.label"
+    ></q-btn>
+  </q-card-section>
+  <q-separator />
+
+  <!--불리언(Boolean) 속성-->
+  <q-card-section>
+    <q-btn :disable="isButtonDisabled" label="버튼 보이기"></q-btn>
+  </q-card-section>
+  <q-separator />
+
+  <!--JavaScript 표현식 사용-->
+  <q-card-section>
+    {{ number + 1 }}
+  </q-card-section>
+  <q-separator />
+  <q-card-section>{{ ok ? "YES" : "NO" }}</q-card-section>
+  <q-separator />
+  <q-card-section>
+    {{ message.split("").reverse().join("") }}
+  </q-card-section>
+  <q-separator />
+  <q-card-section :id="`list-${id}`"> list-{{ id }} </q-card-section>
+  <q-separator />
+
+  <!--함수 호출-->
+  <q-card-section class="text-h6">
+    {{ calculateDate() }}
+  </q-card-section>
+  <q-separator />
+
+  <!--디렉티브-->
+  <q-card-section v-if="!seen"> Now you see me </q-card-section>
+  <q-card-section v-else> on no! </q-card-section>
+  <q-separator />
+  <q-btn @click="awesome = !awesome" label="toggle"></q-btn>
+  <q-card-section v-if="awesome"> Vue is awesome! </q-card-section>
+  <q-card-section v-else> on no! </q-card-section>
+  <q-separator />
+  <q-card-section v-if="type == 'A'"> A </q-card-section>
+  <q-card-section v-else-if="type === 'B'"> B </q-card-section>
+  <q-card-section v-else-if="type === 'C'"> C </q-card-section>
+  <q-card-section v-else> Not A/B/C </q-card-section>
+  <q-separator />
+
+  <!--메서드 선언-->
+  <div class="q-pa-md row items-start">
+    <q-btn @click="increment" label="카운트" color="primary"></q-btn>
+    <q-card-section>methodCount is: {{ methodCount }}</q-card-section>
+  </div>
+  <q-separator />
+
+  <!--4.1 계산된 속성 : 기본 예제-->
+  <q-card-section>책을 가지고 있다: {{ publishedBooksMessage }}</q-card-section>
+	<q-separator />
+
+  <!--4.2 계산된 캐싱 vs 메서드-->
+  <q-card-section>책을 가지고 있다: {{ calculateBooksMessage() }}</q-card-section>
+	<q-separator />
+
+  <!--4.3 계산된 캐싱 vs 메서드 : 예제-->
+  <q-card-section class="text-h6">
+    {{ toTitleDate }}
+    {{ calculateDate() }}
+  </q-card-section>
+	<q-separator />
+
+  <!--4.4 수정 가능한 계산된 속성-->
+  <q-card-section class="text-h6">
+    {{ fullName }}
+  </q-card-section>
+	<q-separator />
+
+</template>
+
+<!-------------------------------------------------------------------------------------------------->
+
+<script>
+
+  import { date } from 'quasar'         // 함수 호출
+  import { nextTick } from 'vue'        // DOM 업데이트 타이밍
+  import { debounce } from 'lodash';    // lodash 플러그인
+
+  export default { // 텍스트 보간법
+    name: 'VueEx',
+    title: "Vue Basic",
+    components: {},
+
+    // =================================================================================
+    data() {
+      return {
+        msg: "hello Vue",
+
+        rawHtml: `<span style="color: red">빨간색이어야 합니다.</span>`,    // HTML 출력하기
+
+        // 속성 바인딩, 단축 문법
+        linkId: "vue",
+	      link: {
+	        to: "http://vuejs.org",
+	        title: "뷰 공식 사이트",
+	        label: "Vuejs.org",
+	      },
+
+        isButtonDisabled: true,   // 불리언(Boolean) 속성
+
+        // JavaScript 표현식 사용
+        ok: true,
+				number: 1000,
+	      message:
+	        "지금까지 템플릿의 단순한 속성만 있었습니다. 그러나 Vue는 실제로 모든 데이터가 내에서 JavaScript 강화의 모든 기능을 지원합니다.",
+	      id: "babychoomp",
+
+        // 디렉티브
+        seen: true,
+	      awesome: true,
+	      type: "B",
+
+        // 반응형 상태 설정, 메서드 선언
+        methodCount: 1,
+
+        // 깊은 반응형
+        obj: {
+        nested: { count: 0 },
+        arr: ['foo', 'bar']
+        },
+
+        inputData:'',   // lodash 플러그인
+
+        // 4.1 계산된 속성 : 기본 예제
+        author: {
+          name: 'John Doe',
+          books: [
+            'Vue 2 - Advanced Guide',
+            'Vue 3 - Basic Guide',
+            'Vue 4 - The Mystery'
+          ]
+        },
+
+        // 4.3 계산된 캐싱 vs 메서드 : 예제
+        str:'',
+
+        // 4.4 수정 가능한 계산된 속성
+        firstName: 'John',
+        lastName: 'Doe'
+      }
+    },
+    // =================================================================================
+    computed: {
+      // 4.1 계산된 속성 : 기본 예제
+      // 계산된 값을 반환하는 속성
+      publishedBooksMessage() {
+        // `this`는 컴포넌트 인스턴스를 가리킵니다.
+        return this.author.books.length > 0 ? 'Yes' : 'No'
+      },
+
+      // 4.3 계산된 캐싱 vs 메서드 : 예제
+      toTitleDate() {
+        const timeStamp = Date.now();
+        const formattedString = date.formatDate(timeStamp, "YYYY-MM-DD HH:mm");
+        return formattedString;
+      },
+
+      //4.4 수정 가능한 계산된 속성
+      fullName: {
+        // getter
+        get() {
+          return this.firstName + ' ' + this.lastName
+        },
+
+        // setter
+        set(newValue) {
+          // 참고: 분해 할당 문법을 사용함.
+          [this.firstName, this.lastName] = newValue.split(' ')
+        }
+      }
+    },
+    // =================================================================================
+    watch:{
+      // lodash 플러그인
+      inputData: debounce(function(newVal,oldVal){
+	      // 처리로직 작성
+	      console.log(newVal,oldVal);
+	    },500)
+    },
+    // =================================================================================
+    // `mounted`는 나중에 설명할 생명 주기 훅입니다.
+    mounted(){
+      // 반응형 상태 설정
+      // `this`는 컴포넌트 인스턴스를 나타냅니다.
+      console.log(this.methodCount) // => 1
+      // 값을 변경할 수 있습니다.
+      this.methodCount= 2
+      console.log(this.methodCount) // => 2
+
+      // 메서드 선언
+      // 메서드는 생명 주기 훅 또는 다른 메서드에서 호출할 수 있습니다!
+      this.increment()
+    },
+    // =================================================================================
+    methods:{
+      // 함수 호출
+      calculateDate() {
+        const timeStamp = Date.now();
+        const formattedString = date.formatDate(timeStamp, "YYYY-MM-DD HH:mm");
+        return formattedString;
+      },
+
+      // 메서드 선언
+      increment() {
+        this.methodCount++
+        console.log('methodCount',this.methodCount);
+
+        this.count++
+        nextTick(() => {
+          // 업데이트된 DOM에 접근 가능
+        })
+      },
+
+      // 깊은 반응형
+      mutateDeeply() {
+        // 변경 사항이 감지됩니다.
+        this.obj.nested.count++
+        this.obj.arr.push('baz')
+      },
+
+      // 메서드 상태 유지
+      click() {
+        // ... 클릭에 응답 ...
+      },
+
+      // 4.2 계산된 캐싱 vs 메서드
+      // 컴포넌트 내에서
+      calculateBooksMessage() {
+        return this.author.books.length > 0 ? 'Yes' : 'No'
+      },
+
+      //4.3 계산된 캐싱 vs 메서드 : 예제
+      calculateDate() {
+        setInterval(()=>{
+          const timeStamp = Date.now();
+          const formattedString = date.formatDate(timeStamp, "YYYY-MM-DD HH:mm:ss");
+          this.str = formattedString;
+        }, 1000);
+        return this.str; // binding 되는 변수 필요
+	    },
+
+    },
+
+    // =================================================================================
+    // 메서드 상태유지
+    created() {
+    // 이제 각 인스턴스는 자체적인 디바운스된 핸들러를 가집니다.
+    this.debouncedClick = _.debounce(this.click, 500)
+    },
+
+    // =================================================================================
+    unmounted() {
+      // 컴포넌트가 제거된 후
+      // 타이머를 취소하는 것은 좋은 방법입니다.
+      this.debouncedClick.cancel()
+    },
+  }
+</script>
+
+<!-------------------------------------------------------------------------------------------------->
+
+<style></style>
