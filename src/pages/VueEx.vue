@@ -100,6 +100,21 @@
   </q-card-section>
 	<q-separator />
 
+  <!--5.1 객체로 바인딩하기 - 여기 3개는 모두 동일한 결과를 보여줍니다. -->
+  <q-card-section :class="{active:isActive, 'text-h3': hasError}"> change color</q-card-section>
+  <q-card-section class="static" :class="{active:isActive, 'text-h3': hasError}"> change color</q-card-section>
+  <div class="static active"></div>
+  <q-card-section :class="classObject"> change color</q-card-section>
+  <q-card-section :class="classObj"> change color</q-card-section>
+  <!--뭐지? 얘만 검은색 큰 글자로 나오네?-->
+
+  <!--배열로 바인딩 하기-->
+  <q-card-section :class="[activeClass, errorClass]"> change color</q-card-section>
+  <div class="active text-danger"></div>
+  <q-card-section :class="[isActive ? activeClass :'', errorClass]"> change color</q-card-section>
+  <q-card-section :class="[{active:isActive}, errorClass]"> change color</q-card-section>
+
+
 </template>
 
 <!-------------------------------------------------------------------------------------------------->
@@ -170,7 +185,23 @@
 
         // 4.4 수정 가능한 계산된 속성
         firstName: 'John',
-        lastName: 'Doe'
+        lastName: 'Doe',
+
+        // 5.1 객체로 바인딩 하기
+        isActive: true,
+        hasError: false,
+
+        classObject: {
+          active: true,
+          'text-h3': false
+        },
+
+        isActive: true,
+        error: null,
+
+        // 5.2 배열로 바인딩 하기
+        activeClass: 'active',
+        errorClass: 'text-danger'
       }
     },
     // =================================================================================
@@ -201,7 +232,16 @@
           // 참고: 분해 할당 문법을 사용함.
           [this.firstName, this.lastName] = newValue.split(' ')
         }
-      }
+      },
+
+      // 5.1 객체로 바인딩 하기
+      classObj() {
+        return {
+          active: this.isActive && !this.error,
+          'text-h3': this.error && this.error.type === 'fatal'
+        }
+      },
+
     },
     // =================================================================================
     watch:{
@@ -214,6 +254,7 @@
     // =================================================================================
     // `mounted`는 나중에 설명할 생명 주기 훅입니다.
     mounted(){
+
       // 반응형 상태 설정
       // `this`는 컴포넌트 인스턴스를 나타냅니다.
       console.log(this.methodCount) // => 1
@@ -224,6 +265,11 @@
       // 메서드 선언
       // 메서드는 생명 주기 훅 또는 다른 메서드에서 호출할 수 있습니다!
       this.increment()
+
+      // 5.1 객체로 바인딩 하기
+      // 인스턴트 생성시 this.error 데이터 넣어서 에러처리
+      this.error = {};
+      this.error.type = 'fatal';
     },
     // =================================================================================
     methods:{
@@ -293,4 +339,9 @@
 
 <!-------------------------------------------------------------------------------------------------->
 
-<style></style>
+<!--5.1 객체로 바인딩 하기-->
+<style scoped>
+	.active{
+	  color:red;
+	}
+</style>
