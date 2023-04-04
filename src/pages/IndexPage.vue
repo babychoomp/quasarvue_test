@@ -12,7 +12,11 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'IndexPage',
-  title: "Vue를 재미있게 공부해봅시다!",
+  // name: 'IndexPage',
+  // title: "Vue를 재미있게 공부해봅시다!",
+
+  // 4-5 실습
+  name:"ShoppingList",
+  title:"쇼핑 리스트",
 })
 </script>
