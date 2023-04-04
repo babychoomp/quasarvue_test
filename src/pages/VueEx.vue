@@ -114,6 +114,31 @@
   <q-card-section :class="[isActive ? activeClass :'', errorClass]"> change color</q-card-section>
   <q-card-section :class="[{active:isActive}, errorClass]"> change color</q-card-section>
 
+  <!--컴포넌트에서 사용하기-->
+  <!-- 자식 컴포넌트의 템플릿 components/ClassChild.vue 생성 -->
+  <q-card-section :class="{foo:true, bar:true}">안녕!</q-card-section>
+
+
+
+  <!--5.3 컴포넌트에서 사용하기-->
+  <!-- 컴포넌트가 사용될 때  -->
+  <class-child></class-child>
+  <!-- 컴포넌트가 사용시 클래스 추가 -->
+  <class-child :class="[baz, boo]"></class-child>
+  <!-- 컴포넌트가 사용시 active 클래스 추가 -->
+  <class-child :class="{ active: isActive }"></class-child>
+
+  <div class="foo bar"></div>
+  <div class="foo bar baz boo"></div>
+
+  <div class="foo bar active"></div>
+
+  <!-- MyComponent 템플릿에서 $attrs 속성을 사용  :id="$attrs.id" 추가 -->
+  <q-card-section :class="{foo:true, bar:true}" :id="$attrs.id">안녕!</q-card-section>
+
+  <class-child id="hi"></class-child>
+
+  <div class="foo bar" id="hi"></div>
 
 </template>
 
@@ -124,11 +149,13 @@
   import { date } from 'quasar'         // 함수 호출
   import { nextTick } from 'vue'        // DOM 업데이트 타이밍
   import { debounce } from 'lodash';    // lodash 플러그인
+  import ClassChild from "components/ClassChild.vue";   // 5.3 컴포넌트에서 사용하기
+
 
   export default { // 텍스트 보간법
     name: 'VueEx',
     title: "Vue Basic",
-    components: {},
+    components: {ClassChild},   // 5.3 컴포넌트에서 사용하기
 
     // =================================================================================
     data() {
@@ -205,6 +232,7 @@
       }
     },
     // =================================================================================
+
     computed: {
       // 4.1 계산된 속성 : 기본 예제
       // 계산된 값을 반환하는 속성
