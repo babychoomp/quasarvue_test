@@ -140,6 +140,14 @@
 
   <div class="foo bar" id="hi"></div>
 
+
+  <!--5.4 인라인 스타일 바인딩-->
+  <div :style="{ color: activeColor, fontSize: fontSize + 'px' }"></div>
+
+  <q-card-section :style="styleObject"> change color</q-card-section>
+
+  <!--5.4 인라인 스타일 바인딩 : 접두사 자동완성-->
+  <q-card-section :style="[baseStyles, overridingStyles]"> change color</q-card-section>
 </template>
 
 <!-------------------------------------------------------------------------------------------------->
@@ -159,6 +167,8 @@
 
     // =================================================================================
     data() {
+
+
       return {
         msg: "hello Vue",
 
@@ -228,8 +238,31 @@
 
         // 5.2 배열로 바인딩 하기
         activeClass: 'active',
-        errorClass: 'text-danger'
+        errorClass: 'text-danger',
+
+        // 5.4 인라인 스타일 바인딩
+        activeColor: 'red',
+        fontSize: 30,
+
+
+        styleObject: {
+          color: 'red',
+          fontSize: '13px'
+        },
+
+        // 5.4 인라인 스타일 바인딩 - 배열로 바인딩 하기
+        baseStyles:{
+          textDecorationLine:'underline',
+          textDecorationThickness: '5px',
+          textDecorationColor: 'red',
+        },
+        overridingStyles:{
+          color:'blue',
+          fontSize:'35px',
+        },
       }
+
+
     },
     // =================================================================================
 
