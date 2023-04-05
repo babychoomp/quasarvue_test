@@ -4,7 +4,31 @@
     <q-card-section class="col text-h4 text-primary">
       {{  header || "welCome" }}
 
-      <!--아이템 추가 버튼 클릭시 입력부분 보이기-->
+      <!--title 옆에 item 추가/수정 버튼 추가하기-->
+      <!--add item or modi-->
+      <q-btn
+        v-if="editing"
+        @click="doEdit(false)"
+        unelevated
+        rounded
+        icon-right="clear"
+        label="Cancel"
+      ></q-btn>
+
+      <q-btn
+      v-else
+      @click="doEdit(true)"
+      color="primary"
+            unelevated
+            rounded
+            icon-right="send"
+            label="Add Item"
+      ></q-btn>
+    </q-card-section>
+  </q-card-section>
+
+  <!--이걸 최상단에 두어서 타이틀과 중복되어 크기가 커지고 색상이 변경되었던 것 같다. 교수님 소스대로 위치를 바꿔보니 문제가 사라졌다.-->
+  <!--아이템 추가 버튼 클릭시 입력부분 보이기-->
       <!--item add-->
       <q-card-section class="row justify-center">
         <q-card-section v-if="editing" class="col-8 col-md-3">
@@ -32,30 +56,6 @@
         </q-card-section>
       </q-card-section>
 
-
-      <!--title 옆에 item 추가/수정 버튼 추가하기-->
-      <!--add item or modi-->
-      <q-btn
-        v-if="editing"
-        @click="doEdit(false)"
-        unelevated
-        rounded
-        icon-right="clear"
-        label="Cancel"
-      ></q-btn>
-
-      <q-btn
-      v-else
-      @click="doEdit(true)"
-      color="primary"
-            unelevated
-            rounded
-            icon-right="send"
-            label="Add Item"
-      ></q-btn>
-    </q-card-section>
-  </q-card-section>
-
   <!--item list 출력하기-->
   <q-card-section>
     <q-list bordered>
@@ -77,8 +77,14 @@
     </q-list>
   </q-card-section>
 
-
-
+  <!--items가 없을때 내용 보여주기-->
+  <q-item-section class="row text-center">
+        <q-card-section>
+          <span v-if="items.length === 0"
+            > 모든 상품을 구매하셨군요! 새 상품을 담아보시죠!</span
+          >
+        </q-card-section>
+  </q-item-section>
 
 
 
@@ -105,6 +111,15 @@ export default {
       editing:false,
       newItem:"",
       newItemHightPriority:false,
+
+      // items가 없을때 내용 보여주기
+      header:"Shopping List App",
+      items : [
+				// 주석처리 해준다
+        // { id: 1, label: "10 party hats", purchased: true, highPriority: false },
+        // { id: 2, label: "2 board games", purchased: true, highPriority: false },
+        // { id: 3, label: "20 cups", purchased: false, highPriority: true },
+      ],
     }
   },
 

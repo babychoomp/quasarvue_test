@@ -146,8 +146,11 @@
 
   <q-card-section :style="styleObject"> change color</q-card-section>
 
-  <!--5.4 인라인 스타일 바인딩 : 접두사 자동완성-->
+  <!--5.4 인라인 스타일 바인딩 : 배열로 바인딩 하기-->
   <q-card-section :style="[baseStyles, overridingStyles]"> change color</q-card-section>
+
+  <!--5.4 인라인 스타일 바인딩 : 접두사 자동완성 (다중 값)-->
+  <div :style="{ display: ['flex', '-webkit-box', '-ms-flexbox'] }"></div>
 </template>
 
 <!-------------------------------------------------------------------------------------------------->

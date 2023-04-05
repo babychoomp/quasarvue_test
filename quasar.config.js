@@ -98,7 +98,11 @@ module.exports = configure(function (ctx) {
       // directives: [],
 
       // Quasar plugins
-      plugins: []
+
+      // https://github.com/quasarframework/quasar-template-meteor/issues/29
+      // plugins: []
+      plugins: ['Notify']
+
     },
 
     // animations: 'all', // --- includes all animations
