@@ -151,6 +151,58 @@
 
   <!--5.4 인라인 스타일 바인딩 : 접두사 자동완성 (다중 값)-->
   <div :style="{ display: ['flex', '-webkit-box', '-ms-flexbox'] }"></div>
+
+
+  <!--6.1 v-if-->
+  <q-card-section v-if="awesome"> Vue is awesome! </q-card-section>
+
+  <!--6.2 v-else-->
+  <q-btn @click="awesome = !awesome" label="toggle"></q-btn>
+  <q-card-section v-if="awesome"> Vue is awesome! </q-card-section>
+  <q-card-section v-else> on no! </q-card-section>
+
+  <!--6.3 v-else-if-->
+  <q-card-section v-if="type == 'A'"> A </q-card-section>
+  <q-card-section v-else-if="type === 'B'"> B </q-card-section>
+  <q-card-section v-else-if="type === 'C'"> C </q-card-section>
+  <q-card-section v-else> Not A/B/C </q-card-section>
+
+  <!--6.4 <template>에서 v-if-->
+  <div class="q-pa-md row items-start q-gutter-md">
+    <q-card v-if="ok" dark bordered class="bg-grey-9 my-card">
+      <q-card-section>
+        <div class="text-h6">Our Changing Planet</div>
+        <div class="text-subtitle2">by John Doe</div>
+      </q-card-section>
+      <q-separator dark inset />
+      <q-card-section>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua.
+      </q-card-section>
+    </q-card>
+  </div>
+
+  <!--6.5 v-show-->
+  <div class="q-pa-md row items-start q-gutter-md">
+    <q-card
+      v-show="ok"
+      dark
+      bordered
+      class="my-card text-white"
+      style="background: radial-gradient(circle, #35a2ff 0%, #014a88 100%)"
+    >
+      <q-card-section>
+        <div class="text-h6">Our Changing Planet</div>
+        <div class="text-subtitle2">by John Doe</div>
+      </q-card-section>
+      <q-separator dark inset />
+      <q-card-section>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua.
+      </q-card-section>
+    </q-card>
+  </div>
+
 </template>
 
 <!-------------------------------------------------------------------------------------------------->
@@ -263,6 +315,15 @@
           color:'blue',
           fontSize:'35px',
         },
+
+        // 6.1 v-if
+        awesome: true,
+
+        // 6.3 v-else-if
+        type: "B",
+
+        // 6.4 <template>에서 v-if
+        ok: true,
       }
 
 
@@ -407,5 +468,13 @@
 <style scoped>
 	.active{
 	  color:red;
+	}
+</style>
+
+<!--6.4 <template>에서 v-if-->
+<style scoped>
+  .my-card {
+	  width: 100%;
+	  max-width: 250px;
 	}
 </style>
