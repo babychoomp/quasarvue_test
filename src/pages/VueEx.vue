@@ -203,6 +203,37 @@
     </q-card>
   </div>
 
+
+  <!--7.1 v-for-->
+  <div class="q-pa-md">
+    <q-list v-for="(item,idx) in listItems" :key="idx" bordered separator>
+      <q-item clickable v-ripple>
+        <q-item-section>{{ idx + 1 }}. {{ item.message }}</q-item-section>
+      </q-item>
+    </q-list>
+  </div>
+  <q-separator />
+
+  <div class="q-pa-md">
+    <q-list v-for="(item, index) in listItems" :key="index" bordered separator>
+      <q-item clickable v-ripple>
+        <q-item-section>
+            {{ parentMessage }} - {{ index + 1 }} - {{ item.message }}
+        </q-item-section>
+      </q-item>
+    </q-list>
+  </div>
+  <q-separator />
+
+  <div class="q-pa-md">
+    <q-list v-for="({message}, index) in listItems" :key="index" bordered separator>
+      <q-item clickable v-ripple>
+        <q-item-section>{{ message }} - {{ index + 1 }}</q-item-section>
+      </q-item>
+    </q-list>
+  </div>
+  <q-separator />
+
 </template>
 
 <!-------------------------------------------------------------------------------------------------->
@@ -220,7 +251,7 @@
     title: "Vue Basic",
     components: {ClassChild},   // 5.3 컴포넌트에서 사용하기
 
-    // =================================================================================
+    // return =================================================================================
     data() {
 
 
@@ -324,11 +355,21 @@
 
         // 6.4 <template>에서 v-if
         ok: true,
+
+
+        // 7.1 v-for
+        listItems: [{ message: "Foo" }, { message: "Bar" }],
+
+        parentMessage: 'Parent',
+		    listItems: [{ message: "Foo" }, { message: "Bar" }],
+
+        tupleListItems: [{ message: "Foo", children:["baby"] }, { message: "Bar",children:['child'] }],
+
       }
 
 
     },
-    // =================================================================================
+    // return =================================================================================
 
     computed: {
       // 4.1 계산된 속성 : 기본 예제
