@@ -234,6 +234,70 @@
   </div>
   <q-separator />
 
+  <div class="q-pa-md">
+    <q-list v-for="(item, index) in tupleListItems" :key="index" bordered separator>
+      <q-item clickable v-ripple>
+        <q-item-section v-for="(childItem, index) in item.children" :key="index">
+          <q-item-section>{{ item.message }} - {{ childItem }}</q-item-section>
+        </q-item-section>
+      </q-item>
+    </q-list>
+  </div>
+  <q-separator />
+
+  <div class="q-pa-md">
+    <q-list v-for="({message}, index) of listItems" :key="index" bordered separator>
+      <q-item clickable v-ripple>
+        <q-item-section>{{ message }} - {{ index }}</q-item-section>
+      </q-item>
+    </q-list>
+  </div>
+  <q-separator />
+
+
+  <!--7.2 객체에 v-for 사용하기-->
+  <div class="q-pa-md">
+    <q-list
+      v-for="(value, key, index) in myObject"
+      :key="index"
+      bordered
+      separator
+    >
+      <q-item clickable v-ripple>
+        <q-item-section
+          >{{ index + 1 }}. {{ key }} : {{ value }}</q-item-section
+        >
+      </q-item>
+    </q-list>
+  </div>
+  <q-separator />
+
+
+  <!--7.3 숫자 범위에 v-for 사용하기-->
+  <div class="q-pa-md row items-start">
+    <q-list v-for="n in 10" :key="n" bordered separator>
+      <q-item clickable v-ripple>
+        <q-item-section>{{ n }}</q-item-section>
+      </q-item>
+    </q-list>
+  </div>
+  <q-separator />
+
+
+  <!--7.4 컴포넌트에 v-for 사용하기-->
+  <div class="q-pa-md items-start">
+    <my-component
+      v-for="(item, index) in listItems"
+      :key="index"
+      :item="item"
+      :index="index"
+    ></my-component>
+  </div>
+  <q-separator />
+
+  <!--7.5 배열 교체-->
+  <q-card-section>{{ filterItems }}</q-card-section>
+
 </template>
 
 <!-------------------------------------------------------------------------------------------------->
@@ -365,11 +429,21 @@
 
         tupleListItems: [{ message: "Foo", children:["baby"] }, { message: "Bar",children:['child'] }],
 
-      }
 
+        // 7.2 객체에 v-for 사용하기
+        myObject: {
+          title: 'Vue에서 목록을 작성하는 방법',
+          author: '홍길동',
+          publishedAt: '2016-04-10'
+        },
+
+        // 7.5 배열 교체
+        items: [{ message: "Foo" }, { message: "Bar" }],
+      }
+      // return =================================================================================
 
     },
-    // return =================================================================================
+
 
     computed: {
       // 4.1 계산된 속성 : 기본 예제
@@ -406,6 +480,13 @@
           active: this.isActive && !this.error,
           'text-h3': this.error && this.error.type === 'fatal'
         }
+      },
+
+      // 7.5 배열 교체
+      filterItems() {
+        return (this.items = this.items.filter((item) =>
+          item.message.match(/Foo/)
+        ));
       },
 
     },
