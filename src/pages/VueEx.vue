@@ -314,6 +314,24 @@
   </div>
   <q-separator />
 
+
+  <!--8.2 메서드 핸들러-->
+  <!-- `greet`는 위에서 정의한 메서드의 이름입니다. -->
+  <div class="q-pa-md row items-start">
+    <!--https://quasar.dev/quasar-plugins/notify#introduction -->
+    <q-btn
+      @click="greet"
+      label="greet"
+      color="secondary"
+      class="q-ma-sm"
+    ></q-btn>
+    <!--https://quasar.dev/quasar-plugins/dialog#introduction-->
+    <q-btn label="Alert" color="primary" @click="alert" class="q-ma-sm" />
+    <q-btn label="Confirm" color="primary" @click="confirm" class="q-ma-sm" />
+    <q-btn label="Prompt" color="primary" @click="prompt" class="q-ma-sm" />
+  </div>
+  <q-separator />
+
 </template>
 
 <!-------------------------------------------------------------------------------------------------->
@@ -464,8 +482,10 @@
 
 
         // 8.1 인라인 핸들러
-        count: 0
+        count: 0,
 
+        // 8.2 메서드 핸들러
+        name: "Vue.js",
       }
       // return =================================================================================
 
@@ -606,6 +626,20 @@
           return numbers.filter(number => number % 2 === 0)
         }
       },
+
+
+      // 8.2 메서드 핸들러
+      // 'event'는 네이티브 DOM 이벤트 객체입니다.
+      greet(e) {
+        // `this`는 메서드가 활성화된 현재 인스턴스를 가리킵니다.
+        this.$q.notify({
+          message: `hello ${this.name}!`,
+          caption: "5 minutes ago",
+          color: "secondary",
+        });
+      },
+
+
     },
 
     // =================================================================================
