@@ -298,6 +298,14 @@
   <!--7.5 배열 교체-->
   <q-card-section>{{ filterItems }}</q-card-section>
 
+
+  <!--7.6 필터링/정렬 결과 표시하기-->
+  <q-list v-for="n in evenNumbers" :key="n" bordered separator>
+    <q-item clickable v-ripple>
+      <q-item-section>{{ n }}</q-item-section>
+    </q-item>
+  </q-list>
+
 </template>
 
 <!-------------------------------------------------------------------------------------------------->
@@ -439,6 +447,14 @@
 
         // 7.5 배열 교체
         items: [{ message: "Foo" }, { message: "Bar" }],
+
+
+        // 7.6 필터링/정렬 결과 표시하기
+        numbers: [1, 2, 3, 4, 5],
+
+        sets: [[ 1, 2, 3, 4, 5 ], [6, 7, 8, 9, 10]],
+
+
       }
       // return =================================================================================
 
@@ -488,6 +504,12 @@
           item.message.match(/Foo/)
         ));
       },
+
+
+      // 7.6 필터링/정렬 결과 표시하기
+      evenNumbers() {
+        return this.numbers.filter(n => n % 2 === 0)
+      }
 
     },
     // =================================================================================
@@ -566,6 +588,13 @@
         return this.str; // binding 되는 변수 필요
 	    },
 
+
+      // 7.6 필터링/정렬 결과 표시하기
+      methods: {
+        even(numbers) {
+          return numbers.filter(number => number % 2 === 0)
+        }
+      },
     },
 
     // =================================================================================
