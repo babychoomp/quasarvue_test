@@ -408,6 +408,131 @@
     <q-btn label="self" color="primary" @click.self="doThis" class="q-ma-sm" />
   </div>
 
+
+
+
+  <!--9.0-->
+  <q-card-section class="col-4">
+      <q-input
+        outlined
+        bottom-slots
+        v-model.lazy="text"
+        label="Label"
+        counter
+        :dense="true"
+      >
+        <template v-slot:prepend>
+          <q-icon name="place"/>
+        </template>
+        <template v-slot:append>
+          <q-icon name="close" @click="text = ''" class="cursor-pointer" />
+        </template>
+
+        <template v-slot:hint> Field hint </template>
+      </q-input>
+    </q-card-section>
+
+
+  <!--9.1 기본 사용법 : 텍스트-->
+  <!--메세지 입력하기 : {{ text }}-->
+  <q-input
+          outlined
+          bottom-slots
+          v-model.lazy="text"
+          label="Label"
+          counter
+          :dense="true"
+        >
+          <template v-slot:prepend>
+            <q-icon name="place"/>
+          </template>
+          <template v-slot:append>
+            <q-icon name="close" @click="text = ''" class="cursor-pointer" />
+          </template>
+
+          <template v-slot:hint> Field hint </template>
+    </q-input>
+
+  <!--9.2 기본 사용법 : 여러 줄 텍스트-->
+  <span>여러 줄 메세지:</span>
+  <p style="white-space: pre-line;">{{ textArea}}</p>
+  <div class="q-pa-md" style="max-width: 300px">
+    <q-input
+      v-model="textArea"
+      filled
+      type="textarea"
+    />
+  </div>
+
+
+
+  <!--9.3 기본 사용법 : 체크박스-->
+  <!--select https://quasar.dev/vue-components/option-group-->
+  <q-card-section class="col-4 q-mt-md">
+    <q-option-group
+      v-model="group"
+      :options="opts"
+      color="green"
+      type="checkbox"
+    />
+    {{ group }}
+  </q-card-section>
+
+
+  <!--9.4 기본 사용법 : 라디오-->
+  <!--checkbox https://quasar.dev/vue-components/radio-->
+  <q-card-section class="col-4 q-mt-md">
+      <q-radio v-model="color" val="teal" label="Teal" color="teal" />
+      <q-radio v-model="color" val="orange" label="Orange" color="orange" />
+      <q-radio v-model="color" val="red" label="Red" color="red" />
+      <q-card-seciton>
+        {{ color }}
+      </q-card-seciton>
+    </q-card-section>
+
+  <!--9.5 기본 사용법 : 셀렉트-->
+  <!--select  https://quasar.dev/vue-components/select-->
+  <q-card-section class="col-4">
+    <q-select
+      filled
+      bottom-slots
+      v-model="model"
+      :options="options"
+      label="Label"
+      counter
+      dense
+      :options-dense="false"
+    >
+      <template v-slot:prepend>
+        <q-icon name="place" @click.stop.prevent />
+      </template>
+      <template v-slot:append>
+        <q-icon
+          name="close"
+          @click.stop.prevent="model = ''"
+          class="cursor-pointer"
+        />
+      </template>
+
+      <template v-slot:hint> Field hint </template>
+    </q-select>
+  </q-card-section>
+
+
+  <!--9.6 기본 사용법 : 다중 선택-->
+  <!---multiple-->
+  <q-select
+          filled
+          v-model="model2"
+          multiple
+          :options="options"
+          counter
+          max-values="2"
+          hint="Max 2 selections"
+          style="width: 250px"
+        />
+
+
 </template>
 
 <!-------------------------------------------------------------------------------------------------->
@@ -562,6 +687,42 @@
 
         // 8.2 메서드 핸들러
         name: "Vue.js",
+
+
+        // 9.0
+        text: "",
+
+
+        // 9.3 기본 사용법 : 체크박스
+        group: ["op1"],
+        opts: [
+          {
+            label: "Option 1",
+            value: "op1",
+          },
+          {
+            label: "Option 2",
+            value: "op2",
+          },
+          {
+            label: "Option 3",
+            value: "op3",
+          },
+        ],
+
+        // 9.4 기본 사용법 : 라디오
+        color: "",
+
+
+        // 9.5 기본 사용법 : 셀렉트
+        options: ["Google", "Facebook", "Twitter", "Apple", "Oracle"],
+        model: null,
+
+        // 9.6 기본 사용법 : 다중 선택
+        model2:[],
+
+
+
       }
       // return =================================================================================
 
