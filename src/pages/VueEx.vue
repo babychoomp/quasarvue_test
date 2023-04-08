@@ -348,6 +348,25 @@
       class="q-ma-sm"
     ></q-btn>
   </div>
+
+
+  <!--8.4 인라인 핸들러에서 이벤트 객체 접근하기-->
+  <div class="q-pa-md row items-start">
+    <q-btn
+      @click="warn('아직 양식을 제출할 수 없습니다.', $event)"
+      label="아직 양식을 제출할 수 없습니다."
+      color="secondary"
+      class="q-ma-sm"
+    ></q-btn>
+    <q-btn
+      @click="(event) => warn('아직 양식을 제출할 수 없습니다1.', event)"
+      label="아직 양식을 제출할 수 없습니다1"
+      color="secondary"
+      class="q-ma-sm"
+    ></q-btn>
+  </div>
+  <q-separator />
+
 </template>
 
 <!-------------------------------------------------------------------------------------------------->
@@ -658,8 +677,29 @@
       // 8.3 인라인 핸들러에서 메서드 호출하기
       say(message) {
         alert(message)
-      }
+      },
 
+
+      // 8.4 인라인 핸들러에서 이벤트 객체 접근하기
+      warn(message, event){
+          if (event) {
+            event.preventDefault();
+            this.$q
+            .dialog({
+              title: "Alert",
+              message: `${message}`,
+            })
+            .onOk(() => {
+              // console.log('OK')
+            })
+            .onCancel(() => {
+              // console.log('Cancel')
+            })
+            .onDismiss(() => {
+              // console.log('I am triggered on both OK and Cancel')
+            });
+          }
+      },
 
     },
 
