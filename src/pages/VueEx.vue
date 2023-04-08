@@ -533,6 +533,43 @@
         />
 
 
+  <!--9.7 값 바인딩하기 : 체크박스-->
+  <!--toggle https://quasar.dev/vue-components/toggle-->
+  <q-card-section class="col-4 q-mt-md">
+    <q-toggle v-model="value" color="green" label="On Right"  true-value="네"
+      false-value="아니오"/> {{value}}
+  </q-card-section>
+
+  <!--toggle https://quasar.dev/vue-components/toggle-->
+  <q-card-section class="col-4 q-mt-md">
+    <q-toggle v-model="value1" color="green" label="On Right"  :true-value="dynamicTrueValue"
+      :false-value="dynamicFalseValue"/>
+			{{value1}}
+  </q-card-section>
+
+
+  <!--9.8 값 바인딩하기 : 라디오-->
+  <q-card-section class="col-4 q-mt-md">
+    <q-radio v-model="color1" :val="first" label="Teal" color="teal" />
+    <q-radio v-model="color1" :val="second" label="Orange" color="orange" />
+    <q-card-section>
+      {{ color1 }}
+    </q-card-section>
+  </q-card-section>
+
+  <!--9.9 값 바인딩하기 : 셀렉트 옵션-->
+  <select v-model="selected">
+    <!-- 인라인 객체 리터럴 -->
+    <option :value="{ number: 123 }">123</option>
+  </select>
+
+  <!--11.1 감시자 기본 예제-->
+  <p>
+    예/아니오 질문:
+    <input v-model="question" />
+  </p>
+  <p>{{ answer }}</p>
+
 </template>
 
 <!-------------------------------------------------------------------------------------------------->
@@ -689,9 +726,9 @@
         name: "Vue.js",
 
 
+
         // 9.0
         text: "",
-
 
         // 9.3 기본 사용법 : 체크박스
         group: ["op1"],
@@ -713,7 +750,6 @@
         // 9.4 기본 사용법 : 라디오
         color: "",
 
-
         // 9.5 기본 사용법 : 셀렉트
         options: ["Google", "Facebook", "Twitter", "Apple", "Oracle"],
         model: null,
@@ -721,7 +757,22 @@
         // 9.6 기본 사용법 : 다중 선택
         model2:[],
 
+        // 9.7 값 바인딩하기 : 체크박스
+        value:"네",
 
+        value1:"No",
+        dynamicTrueValue:"Yes",
+        dynamicFalseValue:"No",
+
+        // 9.8 값 바인딩하기 : 라디오
+        color1:"",
+        first:"첫번째선택",
+        second:"두번째선택",
+
+
+        // 11.1 감시자 기본 예제
+        question: '',
+        answer: '질문에는 일반적으로 물음표가 포함됩니다.'
 
       }
       // return =================================================================================
@@ -786,7 +837,15 @@
       inputData: debounce(function(newVal,oldVal){
 	      // 처리로직 작성
 	      console.log(newVal,oldVal);
-	    },500)
+	    },500),
+
+      // 11.1 감시자 기본 예제
+      // 질문이 변경될 때마다 이 함수가 실행됩니다
+      question(newQuestion, oldQuestion) {
+        if (newQuestion.includes('?')) {
+          this.getAnswer()
+        }
+      }
     },
     // =================================================================================
     // `mounted`는 나중에 설명할 생명 주기 훅입니다.
@@ -807,6 +866,9 @@
       // 인스턴트 생성시 this.error 데이터 넣어서 에러처리
       this.error = {};
       this.error.type = 'fatal';
+
+      // 10. 생명주기 훅 등록하기
+      console.log(`컴포넌트가 마운트 됐습니다.`)
     },
     // =================================================================================
     methods:{
@@ -925,6 +987,18 @@
         console.log("doThat event", event);
       },
 
+
+      // 11.1 감시자 기본 예제
+      async getAnswer() {
+        this.answer = '생각 중...'
+        try {
+          const res = await fetch('https://yesno.wtf/api')
+          this.answer = (await res.json()).answer === 'yes' ? '네' : '아니오'
+        } catch (error) {
+          this.answer = '에러! API에 연결할 수 없습니다. ' + error
+        }
+      }
+
     },
 
     // =================================================================================
@@ -940,6 +1014,7 @@
       // 타이머를 취소하는 것은 좋은 방법입니다.
       this.debouncedClick.cancel()
     },
+
   }
 </script>
 
