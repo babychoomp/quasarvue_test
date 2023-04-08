@@ -367,6 +367,47 @@
   </div>
   <q-separator />
 
+  <!--8.5 이벤트 수식어-->
+  <div class="q-pa-md row items-start">
+  <!-- 클릭 이벤트 전파가 중지됩니다. -->
+    <q-btn label="stop" color="primary" @click.stop="doThis" class="q-ma-sm" />
+
+  <!-- submit 이벤트가 더 이상 페이지 리로드하지 않습니다. -->
+    <q-form
+      label="prevent"
+      color="primary"
+      @submit.prevent="doThis"
+      class="q-ma-sm"
+    >
+      <q-input v-model="name" />
+      <q-btn label="submit" type="submit"></q-btn>
+    </q-form>
+
+  <!-- 수식어를 연결할 수 있습니다. -->
+    <q-btn
+      label="stopPrevent"
+      color="primary"
+      @click.stop.prevent="doThis()"
+      class="q-ma-sm"
+    />
+
+  <!-- 이벤트에 핸들러 없이 수식어만 사용할 수 있습니다. -->
+    <q-form
+      label="prevent"
+      color="primary"
+      @submit.prevent
+      class="q-ma-sm"
+    >
+      <q-input v-model="name" />
+      <q-btn label="submit" type="submit"></q-btn>
+    </q-form>
+
+  <!-- event.target이 엘리먼트 자신일 경우에만 핸들러가 실행됩니다. -->
+  <!-- 예를 들어 자식 엘리먼트에서 클릭 액션이 있으면 핸들러가 실행되지 않습니다. -->
+
+    <q-btn label="self" color="primary" @click.self="doThis" class="q-ma-sm" />
+  </div>
+
 </template>
 
 <!-------------------------------------------------------------------------------------------------->
@@ -699,6 +740,28 @@
               // console.log('I am triggered on both OK and Cancel')
             });
           }
+      },
+
+
+      // 8.5 이벤트 수식어
+      doThis(event) {
+        console.log(event)
+        this.$q.notify({
+          color: "green-5",
+          textColor: "white",
+          icon: "warning",
+          message: `doThis pointerType`,
+        });
+        console.log("doThis pointerType", event);
+      },
+      doThat(event) {
+        this.$q.notify({
+          color: "yellow-5",
+          textColor: "white",
+          icon: "warning",
+          message: `doThat pointerType`,
+        });
+        console.log("doThat event", event);
       },
 
     },
