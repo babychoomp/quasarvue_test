@@ -586,6 +586,8 @@
     name: 'VueEx',
     title: "Vue Basic",
     components: {ClassChild},   // 5.3 컴포넌트에서 사용하기
+    data: () => ({ count: 0 }), // 11.4 콜백 실행 타이밍
+
 
     // return =================================================================================
     data() {
@@ -845,7 +847,48 @@
         if (newQuestion.includes('?')) {
           this.getAnswer()
         }
-      }
+      },
+
+      // 참고: 단순 경로만 가능합니다. 표현식은 지원되지 않습니다.
+      'some.nested.key'(newValue) {
+        // ...
+      },
+
+      // 11.2 깊은 감시자
+      someObject: {
+        handler(newValue, oldValue) {
+          // 참고:
+          // someObject가 다른 객체로 교체되지 않는 한,
+          // newValue와 oldValue는 같습니다.
+          // 둘 다 동일한 객체를 참고하고 있기 때문입니다!
+        },
+        deep: true
+      },
+
+      // 11.3 열성적인 감시자
+      question: {
+        handler(newQuestion) {
+          // 이제 컴포넌트 생성 시
+          // `beforeCreate`와 `created` 훅 사이에
+          // 한 번 실행됩니다.
+        },
+        // 열성적으로 콜백 실행
+        immediate: true
+      },
+
+      // 11.4 콜백 실행 타이밍
+      key: {
+        handler() {},
+        flush: 'post'
+      },
+
+      count: {
+        handler(val, preVal) {
+          console.log('변경이 감지됨!', val, preVal)
+        },
+        flush: 'sync'
+      },
+
     },
     // =================================================================================
     // `mounted`는 나중에 설명할 생명 주기 훅입니다.
@@ -997,6 +1040,16 @@
         } catch (error) {
           this.answer = '에러! API에 연결할 수 없습니다. ' + error
         }
+      },
+
+      // 11.4 콜백 실행 타이밍
+      increment() {
+        this.count++
+        // 이어서 callback이 실행됨
+        this.count++
+        // 역시 callback이 실행됨
+        this.count++
+        // 또 callback이 실행됨
       }
 
     },
@@ -1004,8 +1057,13 @@
     // =================================================================================
     // 메서드 상태유지
     created() {
-    // 이제 각 인스턴스는 자체적인 디바운스된 핸들러를 가집니다.
-    this.debouncedClick = _.debounce(this.click, 500)
+      // 이제 각 인스턴스는 자체적인 디바운스된 핸들러를 가집니다.
+      this.debouncedClick = _.debounce(this.click, 500)
+
+      // 11.5 this.$watch()
+      this.$watch('question', (newQuestion) => {
+        // ...
+      })
     },
 
     // =================================================================================
