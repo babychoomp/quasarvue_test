@@ -332,6 +332,22 @@
   </div>
   <q-separator />
 
+
+  <!--8.3 인라인 핸들러에서 메서드 호출하기-->
+  <div class="q-pa-md row items-start">
+    <q-btn
+      @click="say('안녕')"
+      label="안녕이라고 말하기"
+      color="secondary"
+      class="q-ma-sm"
+    ></q-btn>
+    <q-btn
+      @click="say('잘가')"
+      label="잘가라고 말하기"
+      color="secondary"
+      class="q-ma-sm"
+    ></q-btn>
+  </div>
 </template>
 
 <!-------------------------------------------------------------------------------------------------->
