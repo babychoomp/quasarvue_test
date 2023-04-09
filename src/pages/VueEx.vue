@@ -580,6 +580,18 @@
       {{ item }}
     </li>
   </ul>
+
+
+
+  <!--13.1 컴포넌트 정의하기-->
+  <button @click="count++">당신은 {{ count }} 번 클릭했습니다.</button>
+
+  <button @click="count++">
+    당신은 {{ count }} 번 클릭했습니다.
+  </button>
+
+
+
 </template>
 
 <!-------------------------------------------------------------------------------------------------->
@@ -588,8 +600,8 @@
 
   import { date } from 'quasar'         // 함수 호출
   import { nextTick } from 'vue'        // DOM 업데이트 타이밍
-  import { debounce } from 'lodash';    // lodash 플러그인
-  import ClassChild from "components/ClassChild.vue";   // 5.3 컴포넌트에서 사용하기
+  import { debounce } from 'lodash'   // lodash 플러그인
+  import ClassChild from "components/ClassChild.vue"  // 5.3 컴포넌트에서 사용하기
 
 
   export default { // 텍스트 보간법
@@ -791,7 +803,12 @@
         // 12.2 v-for 내부에서 ref 사용하기
         list: [
           /* ... */
-        ]
+        ],
+
+
+
+        // 13.1 컴포넌트 정의하기
+        count: 0
 
       }
       // return =================================================================================
