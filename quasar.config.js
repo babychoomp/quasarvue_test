@@ -101,7 +101,7 @@ module.exports = configure(function (ctx) {
 
       // https://github.com/quasarframework/quasar-template-meteor/issues/29
       // plugins: []
-      plugins: ['Notify']
+      plugins: ['Notify', 'Dialog','LocalStorage',]
 
     },
 

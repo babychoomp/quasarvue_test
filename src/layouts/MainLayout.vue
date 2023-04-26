@@ -65,6 +65,15 @@ const linksList = [
     icon: 'code',
     link: '/shop'
   },
+
+  // 추가 store 페이지
+  {
+    title: 'todo',
+    caption: 'vue + store 실습',
+    icon: 'home',
+    link: '/todo'
+  },
+
   /*
   {
     title: 'Docs',

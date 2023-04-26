@@ -8,6 +8,9 @@ const routes = [
       { path: '/vue', component: () => import('pages/VueEx.vue') },
       //추가
       { path: '/shop', component: () => import('pages/ShoppingList.vue') },
+
+      // 7주차
+      { path: '/todo', component: () => import('pages/Todo.vue') },
     ]
   },
 
