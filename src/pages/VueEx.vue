@@ -754,6 +754,9 @@
         // 9.0
         text: "",
 
+        // 9,2
+        textArea: '', // "textArea" 속성을 data 객체에서 정의합니다.
+
         // 9.3 기본 사용법 : 체크박스
         group: ["op1"],
         opts: [
@@ -792,6 +795,8 @@
         color1:"",
         first:"첫번째선택",
         second:"두번째선택",
+
+        selected : "",
 
 
         // 11.1 감시자 기본 예제
@@ -1005,11 +1010,9 @@
 
 
       // 7.6 필터링/정렬 결과 표시하기
-      methods: {
-        even(numbers) {
+      even(numbers) {
           return numbers.filter(number => number % 2 === 0)
-        }
-      },
+        },
 
 
       // 8.2 메서드 핸들러

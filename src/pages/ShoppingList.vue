@@ -120,6 +120,8 @@ export default {
         // { id: 2, label: "2 board games", purchased: true, highPriority: false },
         // { id: 3, label: "20 cups", purchased: false, highPriority: true },
       ],
+
+      newItemHighPriority: false,
     }
   },
 
