@@ -24,7 +24,7 @@ module.exports = configure(function (ctx) {
     // https://v2.quasar.dev/quasar-cli-webpack/boot-files
     boot: [
 
-      'axios', 'title'
+      'axios', 'title',
     ],
 
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-css
@@ -79,7 +79,7 @@ module.exports = configure(function (ctx) {
       server: {
         type: 'http'
       },
-      port: 8080,
+      port: 8888,
       open: true // opens browser window automatically
     },
 
@@ -101,7 +101,7 @@ module.exports = configure(function (ctx) {
 
       // https://github.com/quasarframework/quasar-template-meteor/issues/29
       // plugins: []
-      plugins: ['Notify', 'Dialog','LocalStorage',]
+      plugins: ['Notify', 'Dialog','LocalStorage', "LoadingBar", "Loading"]
 
     },
 
